@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Személyi Edző és Coach</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #aed6f1;
+            color: white;
+            text-align: center;
+            padding: 1em 0;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #5dade2;
+        }
+        nav a {
+            color: white;
+            padding: 1em;
+            text-decoration: none;
+            margin: 0 0.5em;
+        }
+        nav a:hover {
+            background-color: #3498db;
+        }
+        .container {
+            padding: 2em;
+            max-width: 800px;
+            margin: auto;
+        }
+        footer {
+            text-align: center;
+            padding: 1em 0;
+            background-color: #aed6f1;
+            color: white;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+        .lang-switch {
+            text-align: right;
+            padding: 0.5em;
+        }
+        .lang-switch a {
+            color: #333;
+            text-decoration: none;
+            margin: 0 0.5em;
+        }
+        .lang-switch a:hover {
+            text-decoration: underline;
+        }
+        .payment-container {
+            text-align: center;
+            padding: 2em 0;
+        }
+        .payment-button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 1em 2em;
+            font-size: 1em;
+            cursor: pointer;
+            margin-top: 1em;
+        }
+        .payment-button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+        function switchLang(lang) {
+            const elements = document.querySelectorAll('[data-lang]');
+            elements.forEach(element => {
+                element.style.display = element.getAttribute('data-lang') === lang ? 'block' : 'none';
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var stripe = Stripe('YOUR_PUBLIC_STRIPE_API_KEY');
+            var checkoutButton = document.getElementById('checkout-button');
+
+            checkoutButton.addEventListener('click', function () {
+                stripe.redirectToCheckout({
+                    lineItems: [{price: 'PRICE_ID', quantity: 1}],
+                    mode: 'payment',
+                    successUrl: 'https://yourdomain.com/success',
+                    cancelUrl: 'https://yourdomain.com/cancel',
+                }).then(function (result) {
+                    if (result.error) {
+                        alert(result.error.message);
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body onload="switchLang('hu')">
+
+<header>
+    <h1 data-lang="hu">Személyi Edző és Coach</h1>
+    <h1 data-lang="en" style="display:none;">Personal Trainer and Coach</h1>
+</header>
+
+<div class="lang-switch">
+    <a href="#" onclick="switchLang('hu')">HU</a> | <a href="#" onclick="switchLang('en')">EN</a>
+</div>
+
+<nav>
+    <a href="#home" data-lang="hu">Kezdőlap</a>
+    <a href="#home" data-lang="en" style="display:none;">Home</a>
+    <a href="#about" data-lang="hu">Rólam</a>
+    <a href="#about" data-lang="en" style="display:none;">About</a>
+    <a href="#services" data-lang="hu">Szolgáltatások</a>
+    <a href="#services" data-lang="en" style="display:none;">Services</a>
+    <a href="#contact" data-lang="hu">Kapcsolat</a>
+    <a href="#contact" data-lang="en" style="display:none;">Contact</a>
+</nav>
+
+<div class="container" id="home">
+    <h2 data-lang="hu">Kezdőlap</h2>
+    <h2 data-lang="en" style="display:none;">Home</h2>
+    <p data-lang="hu">Üdvözöllek a személyi edzés és coaching világában! Célom, hogy segítsek elérni a legjobb formádat, mind fizikailag, mind mentálisan.</p>
+    <p data-lang="en" style="display:none;">Welcome to the world of personal training and coaching! My goal is to help you achieve your best form, both physically and mentally.</p>
+</div>
+
+<div class="container" id="about">
+    <h2 data-lang="hu">Rólam</h2>
+    <h2 data-lang="en" style="display:none;">About</h2>
+    <p data-lang="hu">Szenvedélyem a sport és a személyes fejlődés. Több éves tapasztalattal rendelkezem az online személyi edzés és coaching területén, és elkötelezett vagyok amellett, hogy ügyfeleim elérjék céljaikat.</p>
+    <p data-lang="en" style="display:none;">My passion is sports and personal development. I have several years of experience in online personal training and coaching, and I am committed to helping my clients achieve their goals.</p>
+</div>
+
+<div class="container" id="services">
+    <h2 data-lang="hu">Szolgáltatások</h2>
+    <h2 data-lang="en" style="display:none;">Services</h2>
+    <ul>
+        <li data-lang="hu">Személyi edzés: Egyénre szabott edzéstervek, online támogatás.</li>
+        <li data-lang="en" style="display:none;">Personal training: Customized workout plans, online support.</li>
+        <li data-lang="hu">Életmód coaching: Motiváció, célkitűzés és önfejlesztés.</li>
+        <li data-lang="en" style="display:none;">Lifestyle coaching: Motivation, goal setting, and self-development.</li>
+        <li data-lang="hu">Táplálkozási tanácsadás: Egészséges étkezési szokások kialakítása.</li>
+        <li data-lang="en" style="display:none;">Nutritional advice: Developing healthy eating habits.</li>
+    </ul>
+</div>
+
+<div class="container" id="contact">
+    <h2 data-lang="hu">Kapcsolat</h2>
+    <h2 data-lang="en" style="display:none;">Contact</h2>
+    <p data-lang="hu">Ha kérdésed van, vagy szeretnél együtt dolgozni velem, kérlek, vedd fel velem a kapcsolatot az alábbi elérhetőségek egyikén:</p>
+    <p data-lang="en" style="display:none;">If you have any questions or would like to work with me, please contact me at one of the following:</p>
+    <p>Email: info@szemelyiedzo.hu</p>
+    <p>Telefon: +36 20 123 4567</p>
+</div>
+
+<div class="container payment-container" id="payment">
+    <h2 data-lang="hu">Fizetés</h2>
+    <h2 data-lang="en" style="display:none;">Payment</h2>
+    <button id="checkout-button" class="payment-button" data-lang="hu">Fizetés most</button>
+    <button id="checkout-button" class="payment-button" data-lang="en" style="display:none;">Pay Now</button>
+</div>
+
+<footer>
+    <p data-lang="hu">&copy; 2024 Személyi Edző és Coach</p>
+    <p data-lang="en" style="display:none;">&copy; 2024 Personal Trainer and Coach</p>
+</footer>
+
+</body>
+</html>
